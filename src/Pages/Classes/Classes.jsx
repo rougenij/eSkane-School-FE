@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import myApi from "../../API/api";
 import Container from "@mui/material/Container";
 import {
@@ -13,6 +13,7 @@ import {
 
 const Classes = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [userId, setUserId] = useState(location.state.userId);
   const [userType, setUserType] = useState("");
   const [classes, setClasses] = useState([]);
@@ -55,6 +56,9 @@ const Classes = () => {
   //     console.log(data);
   //   });
   // };
+  const viewClass = (classId) => {
+    navigate(`/classes/${classId}`, { state: { classId } });
+  };
 
   const classesStyle = {
     display: "flex",
@@ -96,8 +100,9 @@ const Classes = () => {
                     <div>Class Teacher: {data.classTeacher}</div>
                     <div>Current Students in class:{data.studentsList}</div>
                   </CardContent>
-                  <Button type="submit">Leave Class</Button>
-                  <Button type="submit">Delete Class</Button>
+                  <Button type="submit" onClick={() => viewClass(data._id)}>
+                    View Class
+                  </Button>
                 </Card>
               </Grid>
             </Grid>
